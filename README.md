@@ -1,6 +1,6 @@
 # gpkron
 
-A simple and fast 2D gaussian process fitting using Kronecker product.
+A simple and fast [2D gaussian process fitting using Kronecker product](https://github.com/HajimeKawahara/gpkron/blob/main/documents/pdf/GP2D.pdf).
 
 ## same shape
 
