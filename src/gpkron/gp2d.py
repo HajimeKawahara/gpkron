@@ -1,5 +1,4 @@
 import numpy as np
-from numpy import linalg as LA
 
 
 def RBF(obst, pret, tau):
@@ -48,26 +47,20 @@ def GP2D(Dmat, gpkernel, sigma, scale, pshape=None):
     """
     if pshape == None:
         pshape = np.shape(Dmat)
-
     rat = np.array(pshape)/np.array(np.shape(Dmat))
     Nx, Ny = np.shape(Dmat)
-
     x = (np.array(list(range(0, Nx))))*rat[0]
     y = (np.array(list(range(0, Ny))))*rat[1]
-
     Nxp, Nyp = pshape
     xp = np.array(list(range(0, Nxp)))
     yp = np.array(list(range(0, Nyp)))
-
     Kx = gpkernel(x, x, scale[0])
     Ky = gpkernel(y, y, scale[1])
-    kapx, Ux = LA.eigh(Kx)
-    kapy, Uy = LA.eigh(Ky)
+    kapx, Ux = np.linalg.eigh(Kx)
+    kapy, Uy = np.linalg.eigh(Ky)
     invL = 1.0/(np.outer(kapx, kapy)+sigma**2)
     P = invL*(np.dot(Ux.T, np.dot(Dmat, Uy)))
     Kxp = gpkernel(x, xp, scale[0])
     Kyp = gpkernel(y, yp, scale[1])
     Dest = (Kxp@Ux@P@Uy.T@Kyp.T)
     return Dest
-
-
