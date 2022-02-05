@@ -32,15 +32,14 @@ def Matern32(obst, pret, tau):
     return (1.0+fac)*np.exp(-fac)
 
 
-def GP2D(Dmat, gpkernel, sigma, xscale, yscale, pshape=None):
+def GP2D(Dmat, gpkernel, sigma, scale, pshape=None):
     """GP 2D for different size between input and prediction.
 
     Args:
         Dmat: input 2D matrix
         gpkernel: GP kernel
         sigma: observational Gaussian noise std
-        xscale: GP correlated length (hyperparameter) for X
-        yscale: GP correlated length (hyperparameter) for Y
+        xscale: GP correlated length (hyperparameter) for (X,Y)
         kernel: GP kernel, rbf or matern32
         pshape: prediction matrix shape. If None, use the same shape as Dmat
 
@@ -53,21 +52,21 @@ def GP2D(Dmat, gpkernel, sigma, xscale, yscale, pshape=None):
     rat = np.array(pshape)/np.array(np.shape(Dmat))
     Nx, Ny = np.shape(Dmat)
 
-    x = (np.array(list(range(0, Nx)))+0.5)*rat[0]
-    y = (np.array(list(range(0, Ny)))+0.5)*rat[1]
+    x = (np.array(list(range(0, Nx))))*rat[0]
+    y = (np.array(list(range(0, Ny))))*rat[1]
 
     Nxp, Nyp = pshape
-    xp = np.array(list(range(0, Nxp)))+0.5
-    yp = np.array(list(range(0, Nyp)))+0.5
+    xp = np.array(list(range(0, Nxp)))
+    yp = np.array(list(range(0, Nyp)))
 
-    Kx = gpkernel(x, x, xscale)
-    Ky = gpkernel(y, y, yscale)
+    Kx = gpkernel(x, x, scale[0])
+    Ky = gpkernel(y, y, scale[1])
     kapx, Ux = LA.eigh(Kx)
     kapy, Uy = LA.eigh(Ky)
     invL = 1.0/(np.outer(kapx, kapy)+sigma**2)
     P = invL*(np.dot(Ux.T, np.dot(Dmat, Uy)))
-    Kxp = gpkernel(x, xp, xscale)
-    Kyp = gpkernel(y, yp, yscale)
+    Kxp = gpkernel(x, xp, scale[0])
+    Kyp = gpkernel(y, yp, scale[1])
     Dest = (Kxp@Ux@P@Uy.T@Kyp.T)
     return Dest
 

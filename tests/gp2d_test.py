@@ -17,8 +17,8 @@ if __name__ == '__main__':
     Dmat = np.sin(xgrid[:, np.newaxis]/4) * np.sin(ygrid[np.newaxis, :]/4) + \
         np.random.randn(Nx, Ny)*sigma
 
-    Dprer = GP2D(Dmat, RBF, sigma, 20., 20., pshape=pshape)
-    Dprem = GP2D(Dmat, Matern32, sigma, 40., 40., pshape=pshape)
+    Dprer = GP2D(Dmat, RBF, sigma, (20., 20.), pshape=pshape)
+    Dprem = GP2D(Dmat, Matern32, sigma, (40., 40.), pshape=pshape)
 
     fig = plt.figure()
     ax = fig.add_subplot(221)

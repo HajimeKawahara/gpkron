@@ -13,8 +13,8 @@ A simple and fast [2D gaussian process fitting using Kronecker product](https://
     sigma = 0.2
     Dmat = np.sin(xgrid[:, np.newaxis]/20) * np.sin(ygrid[np.newaxis, :]/20) + \
         np.random.randn(Nx, Ny)*sigma
-    Dprer = GP2D(Dmat, RBF, sigma, 20., 20., pshape=None)
-    Dprem = GP2D(Dmat, Matern32, sigma, 40., 40., pshape=None)
+    Dprer = GP2D(Dmat, RBF, sigma, (20., 20.))
+    Dprem = GP2D(Dmat, Matern32, sigma, (40., 40.))
 ```
 
 ![sample](https://user-images.githubusercontent.com/15956904/152613707-75c7843b-605d-4e62-bf04-32ce5bfa3551.png)
@@ -32,8 +32,8 @@ A simple and fast [2D gaussian process fitting using Kronecker product](https://
     sigma = 0.2
     Dmat = np.sin(xgrid[:, np.newaxis]/4) * np.sin(ygrid[np.newaxis, :]/4) + \
         np.random.randn(Nx, Ny)*sigma
-    Dprer = GP2D(Dmat, RBF, sigma, 20., 20., pshape=pshape)
-    Dprem = GP2D(Dmat, Matern32, sigma, 40., 40., pshape=pshape)
+    Dprer = GP2D(Dmat, RBF, sigma, (20., 20.), pshape=pshape)
+    Dprem = GP2D(Dmat, Matern32, sigma, (40., 40.), pshape=pshape)
 ```
 
 ![sample](https://user-images.githubusercontent.com/15956904/152614415-678d5994-1ac2-432d-8d2a-40f0dd4519c6.png)
