@@ -2,6 +2,10 @@
 
 A simple and fast [2D gaussian process fitting using Kronecker product](https://github.com/HajimeKawahara/gpkron/blob/main/documents/pdf/GP2D.pdf).
 
+```sh
+pip install gpkron
+```
+
 ## same shape
 
 ```python
